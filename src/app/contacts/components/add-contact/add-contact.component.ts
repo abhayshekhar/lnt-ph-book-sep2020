@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { ContactService } from '../../services/contact.service';
+import { Contact } from '../../models/contact';
 
 @Component({
   selector: 'app-add-contact',
@@ -23,7 +24,7 @@ export class AddContactComponent implements OnInit {
     // Step 1 continues with FormGroup object
     this.contactForm = new FormGroup({
       // Step 2: Have form field equivalent in TS
-      name: new FormControl('abhay', Validators.required), // Step 5: Work with Validators
+      name: new FormControl('arun', Validators.required), // Step 5: Work with Validators
       phone: new FormControl('2331421412', Validators.required), // Refer TS for step 6 // todo: max length 10
       email: new FormControl('a@b.com', [Validators.required, Validators.email])
     }); // Refer HTML for step 3.
@@ -37,7 +38,7 @@ export class AddContactComponent implements OnInit {
     // 1. connect to service -- refer constructor -- dep injection is connecting the service class.
     // 2. send the above data to service
     this.contactService.createContact(this.contactForm.value)
-      .subscribe((res: any) => {  // 3. get the resp from service
+      .subscribe((res: Contact) => {  // 3. get the resp from service
         // 4. show the updates in html
         console.log(res);
         if (res && res.id) {

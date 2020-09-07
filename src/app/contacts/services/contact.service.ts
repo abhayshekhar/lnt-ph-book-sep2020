@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
-// Decorators
+// Decorators -- making the class dependency injectable
 @Injectable({
   providedIn: 'root'
 })

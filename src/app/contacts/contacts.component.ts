@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+
 import { ContactService } from './services/contact.service';
+import { Subscription } from 'rxjs';
+import { Contact } from './models/contact';
 
 @Component({
   selector: 'app-contacts',
@@ -7,23 +10,33 @@ import { ContactService } from './services/contact.service';
   styles: [
   ]
 })
-export class ContactsComponent implements OnInit {
+export class ContactsComponent implements OnInit, OnDestroy {
 
-  contactList: any[];
+  contactList: Contact[];
+  contactSubscription: Subscription;
 
-  constructor(private contactService: ContactService) {  // Step 1: connect to service
-    console.log('Inside constructor');
+  constructor(private contactService: ContactService) { // 1. connect to the service
+    console.log('Inside Constructor');
   }
 
   ngOnInit(): void {
-    // ideal place for us to send the ajax calls
-    console.log('Inside ngOnInIt');
-    // 2. send the req to the service
-    this.contactService.getContacts()
-    .subscribe( (res: any) => {  // step 3: get the response from REST API
-      console.log(res);
-      this.contactList = res;
-    });
+    // ideal place for us to send ajax calls
+    console.log('Inside ngOnInit');
+    // 2. send the request to the service
+    this.contactSubscription = this.contactService.getContacts()
+      .subscribe( (res: Contact[]) => {  // 3. get the resp from service
+        console.log(res);
+        this.contactList = res;
+      });
   }
 
+  ngOnDestroy(): void {
+    console.log('inside destroy');
+    // unsubscribe, remove data, clear array, clearing intervals
+    this.contactSubscription.unsubscribe();
+    if (this.contactList && this.contactList.length > 0){
+      this.contactList.length = 0;
+    }
+  }
 }
+
