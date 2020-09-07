@@ -13,6 +13,8 @@ import { AboutComponent } from './about/about.component';
 import { CpbComponent } from './concepts/cpb/cpb.component';
 import { CebComponent } from './concepts/ceb/ceb.component';
 import {ContactsModule} from './contacts/contacts.module';
+import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
 
 // main switching box
 @NgModule({
@@ -26,9 +28,11 @@ import {ContactsModule} from './contacts/contacts.module';
     AboutComponent,
     CpbComponent,
     CebComponent,
+    LoginComponent,
+    SignupComponent,
   ],
   imports: [
-    BrowserModule,
+    BrowserModule,  // for *ngIf,*ngFor
     AppRoutingModule,
     FormsModule,
     ContactsModule
